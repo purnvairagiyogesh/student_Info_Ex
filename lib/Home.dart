@@ -11,6 +11,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen>
 {
+
+  var darkcolor = Colors.black;
+  var lightcolor = Colors.white;
+  var darkfont = Colors.black;
+  var whitefont = Colors.white;
+
+
   late SharedPreferences sharedPreferences;
 
   bool isnotiSwitched = false;
@@ -28,13 +35,16 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     return Scaffold
     (
-      appBar: AppBar(title: Text("Home Screen"), centerTitle: true, backgroundColor: Colors.blue.shade50,),
+
+      backgroundColor: isthemeSwitched ? darkcolor : lightcolor,
+      appBar: AppBar(title: Text("Home Screen"), centerTitle: true, backgroundColor: isthemeSwitched ? Colors.deepPurple.shade200 : Colors.blue.shade200,),
       body: SafeArea(
         child: Center
         (
           child: Flexible(
             child: Card
             (
+              color: isthemeSwitched ? Colors.black12 : lightcolor,
               child: Padding(
                 padding: const EdgeInsets.all(28.0),
                 child: Column
@@ -45,20 +55,16 @@ class _HomeScreenState extends State<HomeScreen>
                   [
                     CircleAvatar(child: Container(child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [Image.asset('assets/images.jfif')])),radius: 50, ),
                     SizedBox(height: 10,),
-                    Text("Yogesh Purnviaragi", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,)),
+                    Text("Yogesh Purnviaragi", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: isthemeSwitched? Colors.white : Colors.black)),
                     SizedBox(height: 10,),
-                    Text("Enr No. : 12345"),
-
-                    SizedBox(height: 10,),
-                    Text("Course : B.C.A."),
+                    Text("Enr No. : 12345", style: TextStyle(color: isthemeSwitched? Colors.white : Colors.black),),
 
                     SizedBox(height: 10,),
-                    Text("Sem : 1"),
+                    Text("Course : B.C.A.",style: TextStyle(color: isthemeSwitched? Colors.white : Colors.black)),
 
-
+                    SizedBox(height: 10,),
+                    Text("Sem : 1", style: TextStyle(color: isthemeSwitched? Colors.white : Colors.black)),
                   ],
-
-
                 ),
               ),
             ),
@@ -66,22 +72,23 @@ class _HomeScreenState extends State<HomeScreen>
         ),
       ),
       drawer: Drawer(
+        backgroundColor: isthemeSwitched ? darkcolor : lightcolor,
         child: ListView
         (
             children:
             [
               UserAccountsDrawerHeader(
-                accountName: Text(email),
-                accountEmail: Text("yogi@gmail.com"),
+                accountName: Text(email, style: TextStyle(color: isthemeSwitched? Colors.white : Colors.black)),
+                accountEmail: Text("yogi@gmail.com",style: TextStyle(color: isthemeSwitched? Colors.white : Colors.black)),
                 currentAccountPicture: CircleAvatar(
-                  backgroundColor: Colors.blue,
+                  backgroundColor: isthemeSwitched ? Colors.deepPurple : Colors.blue,
                   child: Text(email[0].toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
                 ),
               ),
               ListTile
               (
-                leading: Icon(Icons.home),
-                title: Text("Notification"),
+                leading: Icon(Icons.home,color: isthemeSwitched? Colors.white : Colors.black),
+                title: Text("Notification",style: TextStyle(color: isthemeSwitched? Colors.white : Colors.black)),
                 trailing: Switch(
                   value: isnotiSwitched,
                   onChanged: (bool value) {
@@ -95,16 +102,23 @@ class _HomeScreenState extends State<HomeScreen>
                 )
                 
               ),
+              Divider(),
               ListTile
                 (
-                  leading: Icon(Icons.color_lens),
-                  title: Text("Theme"),
+                  leading: Icon(Icons.color_lens,color: isthemeSwitched? Colors.white : Colors.black),
+                  title: Text("Theme",style: TextStyle(color: isthemeSwitched? Colors.white : Colors.black)),
                   trailing: Switch(
                     value: isthemeSwitched,
-                    onChanged: (bool value) {
+                    onChanged: (bool bgcolor) {
                       setState(() {
-                        isthemeSwitched = value;
-                        isthemeSwitched ? darkTheme() :  LightTheme();
+                        if(isthemeSwitched)
+                        {
+                          isthemeSwitched = !isthemeSwitched;
+                        }
+                        else
+                        {
+                          isthemeSwitched = !isthemeSwitched;
+                        }
                       });
                     },
                     activeColor: Colors.blue,
@@ -112,18 +126,19 @@ class _HomeScreenState extends State<HomeScreen>
                   )
 
               ),
+              Divider(),
               ListTile
                 (
-                  leading: Icon(Icons.language),
-                  title: Text("Language"),
-                  trailing: Text(lan),
+                  leading: Icon(Icons.language,color: isthemeSwitched? Colors.white : Colors.black),
+                  title: Text("Language",style: TextStyle(color: isthemeSwitched? Colors.white : Colors.black)),
+                  trailing: Text(lan,style: TextStyle(color: isthemeSwitched? Colors.white : Colors.black)),
 
               ),
               Divider(),
               ListTile
                 (
                   leading: Icon(Icons.logout),
-                  title: Text("Logout"),
+                  title: Text("Logout",style: TextStyle(color: isthemeSwitched? Colors.white : Colors.black)),
                   onTap: () {
                     sharedPreferences.clear();
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
@@ -141,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen>
     sharedPreferences = await SharedPreferences.getInstance();
     setState(() {
       email = sharedPreferences.getString('email');
-      lan = sharedPreferences.getString('language')!;
+      lan = sharedPreferences.getString('language')!;;
     });
   }
 
