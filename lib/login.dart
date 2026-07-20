@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
 
           backgroundColor: _isSwitched ? darkcolor : lightcolor,
-          appBar: AppBar(actions: [
+          appBar: AppBar(backgroundColor: _isSwitched ? darkcolor : lightcolor, actions: [
             Switch(
             value: _isSwitched,
             onChanged: (value) {
@@ -65,6 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
               (
                 child: Card
                 (
+                  color: _isSwitched ? Colors.grey : lightcolor,
                   child: Padding
                   (
                     padding: const EdgeInsets.all(20.0),
@@ -80,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(height: 10,),
 
                         TextFormField(controller: emailController, decoration: InputDecoration(hintText: "Enter Email..", prefixIcon: Icon(Icons.email),border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
-                          validator: (value)
+                           validator: (value)
                           {
                             if(emailController.text.isEmpty)
                             {
@@ -159,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           });
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
 
-                        }, child: Text("Login"), style: ElevatedButton.styleFrom(backgroundColor: Colors.blue.shade50,))
+                        }, child: Text("Login", style: TextStyle(color: _isSwitched? Colors.white : Colors.black)), style: ElevatedButton.styleFrom(backgroundColor: _isSwitched ? Colors.deepPurple : Colors.blue,))
                       ]
                   )
                 )

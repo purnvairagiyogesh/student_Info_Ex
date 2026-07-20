@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen>
           child: Flexible(
             child: Card
             (
-              color: isthemeSwitched ? Colors.black12 : lightcolor,
+              color: isthemeSwitched ? Colors.grey : lightcolor,
               child: Padding(
                 padding: const EdgeInsets.all(28.0),
                 child: Column
