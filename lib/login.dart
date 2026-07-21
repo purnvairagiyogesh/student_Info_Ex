@@ -61,110 +61,112 @@ class _LoginScreenState extends State<LoginScreen> {
           ],),
           body: SafeArea(
 
-              child: Center
-              (
-                child: Card
+              child: SingleChildScrollView(
+                child: Center
                 (
-                  color: _isSwitched ? Colors.grey : lightcolor,
-                  child: Padding
+                  child: Card
                   (
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column
+                    color: _isSwitched ? Colors.grey : lightcolor,
+                    child: Padding
                     (
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children:
-                      [
-                        CircleAvatar(child: Container(child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [Image.asset('assets/images.jfif')])),radius: 50, ),
-                        SizedBox(height: 10,),
-                        Text("Student Login",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold)),
-                        SizedBox(height: 10,),
-
-                        TextFormField(controller: emailController, decoration: InputDecoration(hintText: "Enter Email..", prefixIcon: Icon(Icons.email),border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
-                           validator: (value)
-                          {
-                            if(value!.isEmpty)
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column
+                      (
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children:
+                        [
+                          CircleAvatar(child: Container(child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [Image.asset('assets/images.jfif')])),radius: 50, ),
+                          SizedBox(height: 10,),
+                          Text("Student Login",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold)),
+                          SizedBox(height: 10,),
+                
+                          TextFormField(controller: emailController, decoration: InputDecoration(hintText: "Enter Email..", prefixIcon: Icon(Icons.email),border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+                             validator: (value)
                             {
-                              return "Enter Email";
-                            }
-                            else if(!emailValidator.hasMatch(emailController.text))
-                            {
-                              return "Invalid Email";
-                            }
-                            return null;
-                          },),
-                        SizedBox(height: 10,),
-
-                        TextFormField(controller: passwordController, decoration: InputDecoration(hintText: "Enter Password..", prefixIcon: Icon(Icons.password),border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
-                          validator: (value) {
-                            if(value!.isEmpty)
-                            {
-                              return "Enter Password";
-                            }
-                            else if(passwordController.text.length != 6)
-                            {
-                              return "Password must be 6 characters";
-                            }
-                            else if(passwordController.text != "123456")
-                            {
-                              return "Invalid Password";
-                            }
-                            return null;
-                          },),
-
-                        SizedBox(height: 10,),
-                        Row(
-                          children:
-                          [
-                            Text("Remember Me"),
-                            Checkbox(value: isChecked, onChanged:(value) {
-                              setState(() {
-                                isChecked = !isChecked;
-                              });
-                              if(isChecked == true)
-                                {
-                                  sharedPreferences.setBool('rememberMe', false);
-                                }
-                                else
-                                {
-                                  sharedPreferences.setBool('rememberMe', true);
-                                }
-                            }),
-                            Spacer(),
-                            DropdownButton(value: dropdownvalue,items: lanlist.map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
-                                onChanged: (String? newValue) => {
-                              setState(() {
-                                dropdownvalue = newValue!;
-                              })
+                              if(value!.isEmpty)
+                              {
+                                return "Enter Email";
+                              }
+                              else if(!emailValidator.hasMatch(emailController.text))
+                              {
+                                return "Invalid Email";
+                              }
+                              return null;
+                            },),
+                          SizedBox(height: 10,),
+                
+                          TextFormField(controller: passwordController, decoration: InputDecoration(hintText: "Enter Password..", prefixIcon: Icon(Icons.password),border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+                            validator: (value) {
+                              if(value!.isEmpty)
+                              {
+                                return "Enter Password";
+                              }
+                              else if(passwordController.text.length != 6)
+                              {
+                                return "Password must be 6 characters";
+                              }
+                              else if(passwordController.text != "123456")
+                              {
+                                return "Invalid Password";
+                              }
+                              return null;
+                            },),
+                
+                          SizedBox(height: 10,),
+                          Row(
+                            children:
+                            [
+                              Text("Remember Me"),
+                              Checkbox(value: isChecked, onChanged:(value) {
+                                setState(() {
+                                  isChecked = !isChecked;
+                                });
+                                if(isChecked == true)
+                                  {
+                                    sharedPreferences.setBool('rememberMe', false);
+                                  }
+                                  else
+                                  {
+                                    sharedPreferences.setBool('rememberMe', true);
+                                  }
+                              }),
+                              Spacer(),
+                              DropdownButton(value: dropdownvalue,items: lanlist.map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+                                  onChanged: (String? newValue) => {
+                                setState(() {
+                                  dropdownvalue = newValue!;
                                 })
-                          ],
-
-                        ),
-
-                  ElevatedButton(
-                    onPressed: () {
-                      if(key.currentState!.validate()) {
-
-                        String email = emailController.text.trim();
-                        String pass = passwordController.text.trim();
-                        String lan = dropdownvalue;
-
-                        sharedPreferences.setString('email', email);
-                        sharedPreferences.setString('password', pass);
-                        sharedPreferences.setString('language', lan);
-                        sharedPreferences.setBool('isSwitched', _isSwitched);
-
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomeScreen()),
-                        );
-                      }
-                    }, child: Text("Login", style: TextStyle(color: _isSwitched? Colors.white : Colors.black)), style: ElevatedButton.styleFrom(backgroundColor: _isSwitched ? Colors.deepPurple : Colors.blue,))
-                      ]
+                                  })
+                            ],
+                
+                          ),
+                
+                    ElevatedButton(
+                      onPressed: () {
+                        if(key.currentState!.validate()) {
+                
+                          String email = emailController.text.trim();
+                          String pass = passwordController.text.trim();
+                          String lan = dropdownvalue;
+                
+                          sharedPreferences.setString('email', email);
+                          sharedPreferences.setString('password', pass);
+                          sharedPreferences.setString('language', lan);
+                          sharedPreferences.setBool('isSwitched', _isSwitched);
+                
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => HomeScreen()),
+                          );
+                        }
+                      }, child: Text("Login", style: TextStyle(color: _isSwitched? Colors.white : Colors.black)), style: ElevatedButton.styleFrom(backgroundColor: _isSwitched ? Colors.deepPurple : Colors.blue,))
+                        ]
+                    )
                   )
-                )
+                ),
+                            ),
               ),
-            ),
           ),
       ),
     );

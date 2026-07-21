@@ -50,7 +50,6 @@ class _HomeScreenState extends State<HomeScreen>
                 child: Column
                 (
                   mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children:
                   [
                     CircleAvatar(child: Container(child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [Image.asset('assets/images.jfif')])),radius: 50, ),
