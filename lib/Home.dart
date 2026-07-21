@@ -95,6 +95,7 @@ class _HomeScreenState extends State<HomeScreen>
                     setState(() {
                       isnotiSwitched = value;
                       isnotiSwitched ? notifyon() : notifyoff();
+                      sharedPreferences.setBool('notification', isthemeSwitched);
                     });
                   },
                   activeColor: Colors.blue,
@@ -114,6 +115,7 @@ class _HomeScreenState extends State<HomeScreen>
                         if(isthemeSwitched)
                         {
                           isthemeSwitched = !isthemeSwitched;
+                          sharedPreferences.setBool('theme', isthemeSwitched);
                         }
                         else
                         {
@@ -156,100 +158,10 @@ class _HomeScreenState extends State<HomeScreen>
     sharedPreferences = await SharedPreferences.getInstance();
     setState(() {
       email = sharedPreferences.getString('email');
-      lan = sharedPreferences.getString('language')!;;
+      lan = sharedPreferences.getString('language')!;
+      sharedPreferences.getBool('notification') ?? false;
+      sharedPreferences.getBool("theme") ?? false;
     });
-  }
-
-  darkTheme()
-  {
-    return Container(
-      child: Scaffold
-        (
-        backgroundColor: Colors.black,
-          appBar: AppBar(title: Text("Home Screen"), centerTitle: true, backgroundColor: Colors.deepPurple,),
-          body: SafeArea(
-            child: Center
-              (
-              child: Flexible(
-                child: Card
-                  (
-                  child: Padding(
-                    padding: const EdgeInsets.all(28.0),
-                    child: Column
-                      (
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children:
-                      [
-                        CircleAvatar(child: Container(child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [Image.asset('assets/images.jfif')])),radius: 50, ),
-                        SizedBox(height: 10,),
-                        Text("Yogesh Purnviaragi", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white)),
-                        SizedBox(height: 10,),
-                        Text("Enr No. : 12345", style:  TextStyle(color: Colors.white),),
-
-                        SizedBox(height: 10,),
-                        Text("Course : B.C.A.", style:  TextStyle(color: Colors.white)),
-
-                        SizedBox(height: 10,),
-                        Text("Sem : 1", style:  TextStyle(color: Colors.white)),
-
-
-                      ],
-
-
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-      ),
-    );
-  }
-
-  LightTheme()
-  {
-    return Scaffold
-      (
-      backgroundColor: Colors.white,
-      appBar: AppBar(title: Text("Home Screen"), centerTitle: true, backgroundColor: Colors.blue.shade50,),
-      body: SafeArea(
-        child: Center
-          (
-          child: Flexible(
-            child: Card
-              (
-              child: Padding(
-                padding: const EdgeInsets.all(28.0),
-                child: Column
-                  (
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children:
-                  [
-                    CircleAvatar(child: Container(child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [Image.asset('assets/images.jfif')])),radius: 50, ),
-                    SizedBox(height: 10,),
-                    Text("Yogesh Purnviaragi", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,)),
-                    SizedBox(height: 10,),
-                    Text("Enr No. : 12345"),
-
-                    SizedBox(height: 10,),
-                    Text("Course : B.C.A."),
-
-                    SizedBox(height: 10,),
-                    Text("Sem : 1"),
-
-
-                  ],
-
-
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
   }
 
   notifyon() {

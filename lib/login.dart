@@ -83,15 +83,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         TextFormField(controller: emailController, decoration: InputDecoration(hintText: "Enter Email..", prefixIcon: Icon(Icons.email),border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
                            validator: (value)
                           {
-                            if(emailController.text.isEmpty)
+                            if(value!.isEmpty)
                             {
                               return "Enter Email";
                             }
                             else if(!emailValidator.hasMatch(emailController.text))
-                            {
-                              return "Invalid Email";
-                            }
-                            else if(emailController.text != userlist.toString())
                             {
                               return "Invalid Email";
                             }
@@ -101,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         TextFormField(controller: passwordController, decoration: InputDecoration(hintText: "Enter Password..", prefixIcon: Icon(Icons.password),border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
                           validator: (value) {
-                            if(passwordController.text.isEmpty)
+                            if(value!.isEmpty)
                             {
                               return "Enter Password";
                             }
@@ -145,22 +141,25 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         ),
 
-                        ElevatedButton(onPressed: () {
-                          String email = emailController.text.trim();
-                          String pass = passwordController.text.trim();
-                          String lan = dropdownvalue;
-                          var color = _isSwitched ? darkcolor : lightcolor;
+                  ElevatedButton(
+                    onPressed: () {
+                      if(key.currentState!.validate()) {
 
-                          setState(() {
-                            sharedPreferences.setString('email', email);
-                            sharedPreferences.setString('password', pass);
-                            sharedPreferences.setString('language', lan);
-                            sharedPreferences.setBool('isSwitched', _isSwitched);
+                        String email = emailController.text.trim();
+                        String pass = passwordController.text.trim();
+                        String lan = dropdownvalue;
 
-                          });
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                        sharedPreferences.setString('email', email);
+                        sharedPreferences.setString('password', pass);
+                        sharedPreferences.setString('language', lan);
+                        sharedPreferences.setBool('isSwitched', _isSwitched);
 
-                        }, child: Text("Login", style: TextStyle(color: _isSwitched? Colors.white : Colors.black)), style: ElevatedButton.styleFrom(backgroundColor: _isSwitched ? Colors.deepPurple : Colors.blue,))
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomeScreen()),
+                        );
+                      }
+                    }, child: Text("Login", style: TextStyle(color: _isSwitched? Colors.white : Colors.black)), style: ElevatedButton.styleFrom(backgroundColor: _isSwitched ? Colors.deepPurple : Colors.blue,))
                       ]
                   )
                 )
